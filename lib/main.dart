@@ -12,22 +12,15 @@ class MyApp extends StatelessWidget{
                 
                 body: Center(
                     child: Container(
-                        child: new Text(
-                            'hello container',
-                            style: TextStyle(fontSize: 40.0),
+                        child: new Image.network(
+                            'https://www.baidu.com/img/bd_logo1.png?where=super',
+                            scale: 1.0,
+                            color: Colors.greenAccent,
+                            colorBlendMode: BlendMode.darken,
                         ),
-                        alignment: Alignment.topLeft,
-                        // color: Colors.lightBlue,
-                        width: 500.0,
-                        height: 400.0,
-                        padding: EdgeInsets.all(10.0),
-                        margin: EdgeInsets.all(5.0),
-                        decoration: new BoxDecoration(
-                            gradient: const LinearGradient(
-                                colors: [Colors.lightBlue,Colors.greenAccent,Colors.purple]
-                            ),
-                            border: Border.all(width: 2.0,color: Colors.red)
-                        ),
+                        width: 300.0,
+                        height: 200.0,
+                        color: Colors.lightBlue,
                     )
                 ),
             ),
