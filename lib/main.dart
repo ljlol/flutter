@@ -17,19 +17,30 @@ class MyApp extends StatelessWidget{
                 appBar: new AppBar(
                     title: new Text('grid widget'),
                 ),
-                body: GridView.count(
-                    padding: const EdgeInsets.all(20.0),
-                    crossAxisSpacing: 10.0,
-                    crossAxisCount: 3,
-                    children: <Widget>[
-                        const Text('星期一'),
-                        const Text('星期er'),
-                        const Text('星期三'),
-                        const Text('星期四'),
-                        const Text('星期五'),
-                        const Text('星期六'),
-                    ],
-                )
+                body: new Row(children: <Widget>[
+                    Expanded(child: new RaisedButton(
+                        onPressed: (){
+
+                        },
+                        color: Colors.redAccent,
+                        child: new Text('红色按钮'),
+                    ),),
+                    
+                    new RaisedButton(
+                        onPressed: (){
+
+                        },
+                        color: Colors.orangeAccent,
+                        child: new Text('黄色按钮'),
+                    ),
+                    new RaisedButton(
+                        onPressed: (){
+
+                        },
+                        color: Colors.pinkAccent,
+                        child: new Text('粉色按钮'),
+                    ),
+                ],)
             ),
         );
     }
