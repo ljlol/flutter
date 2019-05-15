@@ -17,30 +17,15 @@ class MyApp extends StatelessWidget{
                 appBar: new AppBar(
                     title: new Text('grid widget'),
                 ),
-                body: new Row(children: <Widget>[
-                    Expanded(child: new RaisedButton(
-                        onPressed: (){
-
-                        },
-                        color: Colors.redAccent,
-                        child: new Text('红色按钮'),
-                    ),),
-                    
-                    new RaisedButton(
-                        onPressed: (){
-
-                        },
-                        color: Colors.orangeAccent,
-                        child: new Text('黄色按钮'),
-                    ),
-                    new RaisedButton(
-                        onPressed: (){
-
-                        },
-                        color: Colors.pinkAccent,
-                        child: new Text('粉色按钮'),
-                    ),
-                ],)
+                body: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                        Center(child:Text('zhouyi')),
+                        Expanded(child: Center(child:Text('zhouer'))),
+                        Text('zhpusan')
+                    ],
+                )
             ),
         );
     }
