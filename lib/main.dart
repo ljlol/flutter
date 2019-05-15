@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 void main() => runApp(MyApp(
-    items:new List<String>.generate(1000, (i)=>"item $i")
+    
 ));
 
 class MyApp extends StatelessWidget{
 
-    final List<String> items;
-
-    MyApp({Key key,@required this.items}):super(key:key);
+    
 
     @override
     Widget build(BuildContext context) {
@@ -17,16 +15,21 @@ class MyApp extends StatelessWidget{
             title: '欢迎玩flutter',
             home: Scaffold(
                 appBar: new AppBar(
-                    title: new Text('listview widget'),
+                    title: new Text('grid widget'),
                 ),
-                body: new ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (context,index){
-                        return new ListTile(
-                            title: new Text('${items[index]}'),
-                        );
-                    },
-                ),
+                body: GridView.count(
+                    padding: const EdgeInsets.all(20.0),
+                    crossAxisSpacing: 10.0,
+                    crossAxisCount: 3,
+                    children: <Widget>[
+                        const Text('星期一'),
+                        const Text('星期er'),
+                        const Text('星期三'),
+                        const Text('星期四'),
+                        const Text('星期五'),
+                        const Text('星期六'),
+                    ],
+                )
             ),
         );
     }
