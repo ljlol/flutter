@@ -1,71 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class Product{
-    final String title;//商品标题
-    final String description;//描述
-
-    Product(this.title,this.description);
-}
-
-void main(){
+void main(List<String> args) {
     runApp(MaterialApp(
-        title: '导航1',
-        home:ProductList(
-            products:List.generate(
-                20, 
-                (i)=>Product('666商品 $i','这是一个详情,编号$i')
-            ),
-        )
-        ),
-    );
+        title:'页面',
+        home: FirstPage(),
+    ));
 }
 
 
-class ProductList extends StatelessWidget {
-
-  final List<Product> products;
-  ProductList({Key key,@required this.products}):super(key:key);
-
+class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("商品列表"),
+            title: Text('要电话'),
             
         ),
-        body:ListView.builder(
-            itemCount: products.length,
-            itemBuilder: (context,index){
-                return ListTile(
-                    title: Text(products[index].title),
-                    onTap: (){
-                        Navigator.push(context, 
-                            MaterialPageRoute(
-                                builder: (context)=>ProductDetail(product:products[index])
-                            )
-                        );
-                    },
-                );
-            },
-        )
+        body: Center(
+            child: RouteButton(),
+        ),
     );
   }
 }
 
-class ProductDetail extends StatelessWidget {
+class RouteButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+        onPressed: (){_navigeteToXiaoJieJie(context);},
+        child: Text('找小姐姐'),
+    );
+  }
 
-    final Product product;
+  _navigeteToXiaoJieJie(BuildContext context) async{
+        final result = await Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context)=>XiaoJieJie())
+        );
 
-    ProductDetail({Key key,@required this.product}):super(key:key);
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text('$result'),));
+  }
+}
 
+class XiaoJieJie extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('商品详情')),
-        body: Center(
-            child: Text('${product.description}'),
-        ),
+      appBar: AppBar(
+          title: Text('小姐姐'),
+      ),
+      body: Center(
+          child: Column(
+              children: <Widget>[
+                  RaisedButton(
+                      child: Text('大长腿'),
+                      onPressed: (){
+                          Navigator.pop(context,'大长腿:111223344');
+                      },
+                  ),
+                  RaisedButton(
+                      child: Text('大屁股'),
+                      onPressed: (){
+                          Navigator.pop(context,'大屁股:111223344');
+                      },
+                  )
+              ],
+          ),
+      ),
     );
   }
 }
+
+
