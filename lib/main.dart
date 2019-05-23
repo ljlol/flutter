@@ -14,7 +14,7 @@ void main(){
         home:ProductList(
             products:List.generate(
                 20, 
-                (i)=>Product('商品 $i','这是一个详情,编号$i')
+                (i)=>Product('666商品 $i','这是一个详情,编号$i')
             ),
         )
         ),
@@ -39,10 +39,33 @@ class ProductList extends StatelessWidget {
             itemBuilder: (context,index){
                 return ListTile(
                     title: Text(products[index].title),
-                    onTap: (){},
+                    onTap: (){
+                        Navigator.push(context, 
+                            MaterialPageRoute(
+                                builder: (context)=>ProductDetail(product:products[index])
+                            )
+                        );
+                    },
                 );
             },
         )
+    );
+  }
+}
+
+class ProductDetail extends StatelessWidget {
+
+    final Product product;
+
+    ProductDetail({Key key,@required this.product}):super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('商品详情')),
+        body: Center(
+            child: Text('${product.description}'),
+        ),
     );
   }
 }
