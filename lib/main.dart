@@ -47,9 +47,10 @@ class MyHomePage extends StatelessWidget {
             Text('我的')
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: (){},
-          child: Text('浮动按钮'),
+          child: Icon(Icons.add),
         ),
         drawer: Drawer(
           child: ListView(
@@ -85,21 +86,24 @@ class MyHomePage extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Colors.lightBlue),
-          height: 60.0,
-          child: TabBar(
-            labelStyle: TextStyle(height: 0.5,fontSize: 12.0),
-            tabs: <Widget>[
-              Tab(icon: Icon(Icons.memory),text: '金融',),
-              Tab(icon: Icon(Icons.money_off),text: '医疗',),
-              Tab(icon: Icon(Icons.add_circle,size:52.0,color:Colors.white),),
-              Tab(icon: Icon(Icons.high_quality),text: '汽车',),
-              Tab(icon: Icon(Icons.airplay),text: '我的',)
-
-            ],
+        
+        bottomNavigationBar: BottomAppBar(
+          child: SizedBox(
+            height: 60.0,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(child: Tab(icon: Icon(Icons.memory), text: '医疗',), flex: 1,),
+                Expanded(child: Tab(icon: Icon(Icons.money_off), text: '金融',), flex: 2,),
+                Expanded(child: Tab(icon: Icon(Icons.high_quality), text: '汽车',), flex: 2,),
+                Expanded(child: Tab(icon: Icon(Icons.my_location), text: '我的',), flex: 1,)
+              ],
+            ),
           ),
-        ),
+          shape: CircularNotchedRectangle(),
+          color: Colors.lightBlueAccent,
+        )
       ),
     );
   }
