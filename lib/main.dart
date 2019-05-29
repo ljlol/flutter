@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:english_words/english_words.dart';
 
 void main(List<String> args) {
     runApp(MyApp());
@@ -12,9 +13,36 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'first',
-      home: MyHomePage(),
+      home: Scaffold(
+        appBar: AppBar(
+           title: Text('hello'),
+        ),
+        body: Center(
+          child: RandomWords(),
+        ),
+      ),
       
       theme: ThemeData(primarySwatch: Colors.lightBlue),
+    );
+  }
+}
+
+class RandomWords extends StatefulWidget {
+  @override
+  _RandomWordsState createState() => _RandomWordsState();
+}
+
+class _RandomWordsState extends State<RandomWords> {
+  @override
+
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  Widget build(BuildContext context) {
+    
+    final wordPair = new WordPair.random();
+    return Text(
+      wordPair.asPascalCase
     );
   }
 }
