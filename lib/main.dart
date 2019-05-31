@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:english_words/english_words.dart';
 import 'package:testapp/app.dart';
@@ -6,6 +7,56 @@ import 'package:testapp/app.dart';
 void main(List<String> args) {
     runApp(UiApp());
 }
+
+class demoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'container grid',
+      theme: ThemeData(primarySwatch: Colors.brown),
+      home: GridDemo(),
+    );
+  }
+}
+
+class GridDemo extends StatefulWidget {
+  @override
+  _GridDemoState createState() => _GridDemoState();
+}
+
+class _GridDemoState extends State<GridDemo> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('grid first'),
+      ),
+      body: Center(
+        child: buildGrid(),
+      ),
+    );
+  }
+
+  List<Container> _buildGridTileList(int count){
+    return List<Container>.generate(count, (int index) =>
+      Container(child: Image.network('https://tvax1.sinaimg.cn//crop.24.0.1194.1194.180/006cFMsrly8fkayogp3itj30yi0x60un.jpg'),)
+    );
+  }
+
+  Widget buildGrid() {
+    return GridView.extent(
+      
+      maxCrossAxisExtent: 150.0,
+      padding: const EdgeInsets.all(4.0),
+      mainAxisSpacing: 5.0,
+      crossAxisSpacing: 5.0,
+      children: _buildGridTileList(30),
+    );
+  }
+}
+
+
+
 
 class UiApp extends StatelessWidget {
   @override
