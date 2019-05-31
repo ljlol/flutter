@@ -5,7 +5,84 @@ import 'package:english_words/english_words.dart';
 import 'package:testapp/app.dart';
 
 void main(List<String> args) {
-    runApp(UiApp());
+    runApp(ListDemo());
+}
+
+
+
+class ListDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'list控件',
+      home: GridLayout(),
+    );
+  }
+}
+
+
+class GridLayout extends StatelessWidget {
+
+  String url =
+      "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=495625508,"
+      "3408544765&fm=27&gp=0.jpg";
+
+  List<Widget> buildGridTileList(int number){
+    return List<Widget>.generate(
+      number, (int index) =>
+        Container(child: Image.network(url),)
+      );
+  }
+
+  Widget buildGrid(){
+    return GridView.count(
+      primary: false,
+      padding: EdgeInsets.all(20.0),
+      crossAxisCount: 2,
+      crossAxisSpacing: 10.0,
+      children: buildGridTileList(5),
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('GridView'),
+      ),
+      body: buildGrid(),
+    );
+  }
+}
+
+class ListLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Listview'),
+      ),
+      body: ListView.builder(
+        itemCount: 40,
+        itemBuilder: buildItem,
+      ),
+    );
+  }
+
+  Widget buildItem(BuildContext context,int index){
+    if(index.isOdd) return Divider();
+
+    TextStyle textStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14.0
+    );
+
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text('listView',style:textStyle),
+    );
+  }
 }
 
 class demoApp extends StatelessWidget {
