@@ -2,10 +2,119 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter/widgets.dart';
 import 'package:testapp/app.dart';
+import 'bili.dart';
 
 void main(List<String> args) {
-    runApp(ListDemo());
+    runApp(FirstDemo());
+}
+
+class FirstDemo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(primaryColor: Color.fromARGB(255, 250, 130, 130)),
+      title: 'demo',
+      home: biliPage(),
+    );
+  }
+}
+
+class page1 extends StatefulWidget {
+  @override
+  _page1State createState() => _page1State();
+}
+
+class _page1State extends State<page1> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.add),
+        title: Text('hello'),
+      ),
+
+      body: ListView(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+                Expanded(
+                  child: Column(
+                          children: <Widget>[
+                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
+                            const Text('22'),
+                          ],
+                        ),
+                ),
+                 Expanded(
+                  child: Column(
+                          children: <Widget>[
+                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
+                            const Text('22'),
+                          ],
+                        ),
+                ),
+                 Expanded(
+                  child: Column(
+                          children: <Widget>[
+                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
+                            const Text('22'),
+                          ],
+                        ),
+                ),
+                 Expanded(
+                  child: Column(
+                          children: <Widget>[
+                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
+                            const Text('22'),
+                          ],
+                        ),
+                ),
+               
+            ],
+          ),
+
+
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                flex: 1,
+                child: 
+                Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',),
+              ),
+
+              Flexible(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                      const Text('消息标题'),
+                      const Text('消息内容1234567')
+                  ],
+                
+                ),
+              ),
+
+              Flexible(
+                flex: 1,
+                child: const Text('2019-06-05'),
+              )
+                
+
+            
+            ],
+          )
+
+         
+        ],
+      )
+    );
+  }
 }
 
 
