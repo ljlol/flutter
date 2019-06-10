@@ -29,7 +29,7 @@ class _biliPageState extends State<biliPage> {
             ),
 
             Container(
-              margin: EdgeInsets.only(left: 13.0,right: 13.0),
+              margin: EdgeInsets.only(left: 17.0,right: 13.0),
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(left: 5.0),
               width: 180.0,
@@ -151,22 +151,182 @@ class _biliPageState extends State<biliPage> {
               ListView.builder(itemBuilder: (context,index){
                 return Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
-                            width: 150.0,
-                            height: 50.0,
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child:
+                              Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                                // width: 150.0,
+                                height: 50.0,
+                              ),
                           ),
-                          Text('英雄联盟')
+                          
+
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text('英雄联盟'),
+                          ),
                         ],
-                      )
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child:
+                              Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                                // width: 150.0,
+                                height: 50.0,
+                              ),
+                          ),
+                          
+
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text('英雄联盟'),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child:
+                              Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                                // width: 150.0,
+                                height: 50.0,
+                              ),
+                          ),
+                          
+
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text('英雄联盟'),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child:
+                              Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                                // width: 150.0,
+                                height: 50.0,
+                              ),
+                          ),
+                          
+
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text('英雄联盟'),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child:
+                              Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                                // width: 150.0,
+                                height: 50.0,
+                              ),
+                          ),
+                          
+
+                          Container(
+                            margin: EdgeInsets.only(top: 10.0),
+                            child: Text('英雄联盟'),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 );
-              },itemCount: 5,)
+              },itemCount: 2,)
 
           ),
+
+          Container(
+            height: 1.0,
+            color: Colors.black12,
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 10.0,bottom: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left:10.0,right: 10.0),
+                  child: Text('我的关注'),
+
+                ),
+      
+                Text('16小时前',style: TextStyle(color: Colors.black26),),
+
+                Text('xxxxxx'),
+                Text('直播了xx电台',style: TextStyle(color: Colors.black26),),
+
+                Icon(Icons.home,color: Colors.black26,)
+
+              ],
+            ),
+          ),
+
+          Container(
+            height: 1.0,
+            color: Colors.black12,
+          ),
+
+
+          Container(
+            height: 50.0,
+            padding: EdgeInsets.only(left: 10.0,right: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('推荐直播'),
+                
+                Row(
+                  children: <Widget>[
+                    Text('换一换'),
+                    Icon(Icons.refresh,color: Colors.black26,size: 20.0,)
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          SizedBox(
+            height: 500.0,
+            child:
+            GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemBuilder: (context,index){
+                return Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: 
+                      ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                        child: Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                        fit: BoxFit.cover,
+                        width: 190.0,
+                        height: 80.0,)
+                      )
+                    ),
+                  ],
+                );
+              },itemCount: 6,
+            )
+
+          )
 
 
           
