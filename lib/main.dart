@@ -14,7 +14,7 @@ class FirstDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Color.fromARGB(255, 250, 130, 130)),
+      theme: ThemeData(primaryColor: Colors.redAccent),
       title: 'demo',
       home: biliPage(),
     );
