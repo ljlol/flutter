@@ -21,12 +21,31 @@ class _biliPageState extends State<biliPage> {
         elevation: 0.0,
         title: Row(
           children: <Widget>[
-            ClipOval(
-              child: Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
-                width: MediaQuery.of(context).padding.top,
-                // height: 30.0,
-              ),
+
+            Stack(
+              alignment: Alignment(1.0, -1.2),
+              children: <Widget>[
+                ClipOval(
+                  child: Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
+                    width: MediaQuery.of(context).padding.top,
+                    // height: 30.0,
+                  ),
+                ),
+
+                Container(
+                  
+                  width: 9.0,
+                  height: 9.0,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white,width: 1.0)
+                    
+                  ),
+                ),
+              ],
             ),
+            
 
             Container(
               margin: EdgeInsets.only(left: 17.0,right: 13.0),
