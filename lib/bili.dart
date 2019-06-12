@@ -306,12 +306,16 @@ class _biliPageState extends State<biliPage> {
             child:
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 1.4),
               itemBuilder: (context,index){
-                return Column(
+                return Padding( 
+                  padding: EdgeInsets.only(left: 15.0,right: 10.0),
+                  child:
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(1.0),
                       child: 
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(6.0)),
@@ -321,12 +325,16 @@ class _biliPageState extends State<biliPage> {
                         height: 80.0,)
                       )
                     ),
+
+                    Text('三局杀戮换游戏呀'),
+                    Text('其他游戏',style: TextStyle(color: Colors.black26),)
                   ],
+                )
                 );
               },itemCount: 6,
             )
 
-          )
+          ),
 
 
           
