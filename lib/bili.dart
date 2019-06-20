@@ -153,7 +153,9 @@ class _biliPageState extends State<biliPage> {
                     'https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',
                     fit: BoxFit.cover,
                     height: 240.0,
-                  ))),
+                  )
+              )
+          ),
           SizedBox(
               height: 200.0,
               child: ListView.builder(

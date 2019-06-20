@@ -5,6 +5,8 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/widgets.dart';
 import 'package:testapp/app.dart';
 import 'bili.dart';
+import 'EditTextWidget.dart';
+import 'ListWidgt.dart';
 
 void main(List<String> args) {
     runApp(FirstDemo());
@@ -16,7 +18,130 @@ class FirstDemo extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.redAccent),
       title: 'demo',
-      home: biliPage(),
+      home: TextPage(),
+    );
+  }
+}
+
+class TextPage extends StatefulWidget {
+  @override
+  _TextPageState createState() => _TextPageState();
+}
+
+class _TextPageState extends State<TextPage> {
+
+  TextEditingController _editController = TextEditingController();
+  FocusNode _editNode = FocusNode();
+
+  String _content = '';
+  String _spyContent = '';
+
+  @override
+  void initState(){
+    super.initState();
+
+    _editNode.addListener((){
+      print('edit has focus? => ${_editNode.hasFocus}');
+    });
+  }
+
+  @override
+  void dispose() {
+    // 记得销毁，防止内存溢出
+    _editController.dispose();
+    _editNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('input content'),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: _editController,
+              focusNode: _editNode,
+              decoration: InputDecoration(
+                icon: Icon(Icons.phone_iphone,color: Theme.of(context).primaryColor,),
+                labelText: '请输入手机号',
+                helperText: '手机号',
+                hintText: '手机号。。。在这输入'
+              ),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              style: TextStyle(color: Colors.redAccent,fontSize: 18.0),
+              textDirection: TextDirection.ltr,
+              maxLength: 11,
+              maxLengthEnforced: true,
+              onChanged: (v){
+                setState(() {
+                  _spyContent = v;
+                });
+              },
+              onSubmitted: (s){
+                setState(() {
+                  _spyContent = _editController.value.text;
+                });
+              },
+            ),
+            
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: 
+              RaisedButton(
+                onPressed: (){
+                  setState(() {
+                    _content = _editController.value.text;
+                  });
+
+                  _editController.clear();
+
+                  setState(() {
+                    _spyContent = '';
+                  });
+                },
+
+                child: Text('获取输入内容'),
+
+                )
+            ),
+
+
+
+            Text(_content.isNotEmpty?'获取到输入内容： $_content' :'还未获取到任何内容...'),
+
+            Padding(
+              padding:EdgeInsets.symmetric(vertical: 8.0),
+              child: Text('我是文字内容监听：$_spyContent'),
+            )
+            
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TabChangePage extends StatelessWidget {
+
+  final String content;
+
+  const TabChangePage({Key key, this.content}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return 
+    SafeArea(
+      child:
+      Container(
+        alignment: Alignment.center,
+          child: Text(content,style:TextStyle(color: Theme.of(context).primaryColor,fontSize:30.0)),
+      )
     );
   }
 }
@@ -26,93 +151,111 @@ class page1 extends StatefulWidget {
   _page1State createState() => _page1State();
 }
 
-class _page1State extends State<page1> {
+class _page1State extends State<page1> with SingleTickerProviderStateMixin {
+
+  List<String> _abs = ['A', 'B', 'S'];
+
+  TabController _tabController;
+
+  PageController _pageController;
+
+  @override
+  void initState(){
+    super.initState();
+    _tabController = TabController(length: _abs.length, vsync: this);
+
+    _pageController = PageController(initialPage: 0);
+
+    _tabController.addListener((){
+      if(_tabController.indexIsChanging){
+        _pageController.animateToPage(_tabController.index,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.decelerate
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.add),
+        // leading: Icon(Icons.menu,color: Colors.lightBlue, size: 30.0,),
         title: Text('hello'),
+        actions: <Widget>[
+          PopupMenuButton(
+            offset: Offset(50.0, 100.0),
+            onSelected: (val) => print('select item is $val'),
+            icon: Icon(Icons.more_vert,color:Colors.yellowAccent),
+            itemBuilder: (context) =>
+              List.generate(_abs.length, (index) => PopupMenuItem(value: _abs[index],child:Text(_abs[index])))
+          )
+        ],
+        bottom: TabBar(
+          labelColor: Colors.red,
+          unselectedLabelColor: Colors.white,
+          controller: _tabController,
+          isScrollable: false,
+          indicatorColor: Colors.yellow,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorWeight: 5.0,
+          tabs: List.generate(_abs.length, (index)=> Tab(text: _abs[index], icon: Icon(Icons.android),))
+        ),
+      ),
+      drawer: Drawer(
+        child: SafeArea(
+          child: Container(
+            child: Text('Drawer',style:TextStyle(color: Theme.of(context).primaryColor,fontSize:30.0)),
+          ),
+        ),
       ),
 
-      body: ListView(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-                Expanded(
-                  child: Column(
-                          children: <Widget>[
-                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
-                            const Text('22'),
-                          ],
-                        ),
-                ),
-                 Expanded(
-                  child: Column(
-                          children: <Widget>[
-                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
-                            const Text('22'),
-                          ],
-                        ),
-                ),
-                 Expanded(
-                  child: Column(
-                          children: <Widget>[
-                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
-                            const Text('22'),
-                          ],
-                        ),
-                ),
-                 Expanded(
-                  child: Column(
-                          children: <Widget>[
-                            Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg'),
-                            const Text('22'),
-                          ],
-                        ),
-                ),
-               
-            ],
-          ),
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(icon: Icon(Icons.android,size: 30.0,
+              color: Theme.of(context).primaryColor,),
+              onPressed:(){}
+            ),
+            IconButton(icon: Icon(Icons.people,size: 30.0,
+              color: Theme.of(context).primaryColor,),
+              onPressed:(){}
+            ),
 
+          ],
+        ),
+      ),
+      floatingActionButton: 
+        FloatingActionButton(
+          onPressed: ()=> print('Add'),
+          child: Icon(Icons.add, color: Colors.white),
+          
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                flex: 1,
-                child: 
-                Image.network('https://tvax2.sinaimg.cn/crop.0.0.750.750.180/005AxgmIly8g1829y7z6bj30ku0kuabc.jpg',),
-              ),
+      body: PageView(
+        controller: _pageController,
+        children: 
+          _abs.map((str) => TabChangePage(content: str,)).toList(),
+        onPageChanged: (position){
+          _tabController.index = position;
+        },
+      ),
 
-              Flexible(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                      const Text('消息标题'),
-                      const Text('消息内容1234567')
-                  ],
-                
-                ),
-              ),
+      // body: TabChangePage(content: 'Content',),
 
-              Flexible(
-                flex: 1,
-                child: const Text('2019-06-05'),
-              )
-                
-
-            
-            ],
-          )
-
-         
-        ],
-      )
+      
     );
   }
 }
