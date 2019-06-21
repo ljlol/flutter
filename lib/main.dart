@@ -23,6 +23,83 @@ class FirstDemo extends StatelessWidget {
   }
 }
 
+class LoginApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp
+    (
+      title: 'Login demo',
+      theme: ThemeData(primarySwatch: Colors.lightBlue),
+      home: LoginHomePage(), 
+    );
+  }
+}
+
+
+class LoginHomePage extends StatefulWidget {
+  @override
+  _LoginHomePageState createState() => _LoginHomePageState();
+}
+
+class _LoginHomePageState extends State<LoginHomePage> with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  List<String> _pageIndicators = ['登录', '注册'];
+
+  List<Widget> _pages = [];
+
+  int _position = 0;
+
+  @override
+  void initState(){
+    super.initState();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(primarySwatch: Colors.pink,iconTheme: IconThemeData(color: Colors.pink)),
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.all(20.0),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage('images/drawable-xhdpi-v4/ic_card_personal_foreign.png'),fit: BoxFit.cover),
+          ),
+          child: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TabBar(
+                    indicatorSize: TabBarIndicatorSize.label,
+                    controller: _tabController,
+                    indicatorWeight: 4.0,
+                    indicatorColor: Colors.white,
+                    tabs: _pageIndicators.map((v) => Text(v,style: TextStyle(color: Colors.white, fontSize: 24.0),)).toList(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top:30.0),
+                    child: SizedBox(
+                      child: IndexedStack(
+                        children: _pages,
+                        index: _position,
+                      ),
+                      height: MediaQuery.of(context).size.height / 2,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+      
+    );
+  }
+}
+
 class TextPage extends StatefulWidget {
   @override
   _TextPageState createState() => _TextPageState();
