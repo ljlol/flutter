@@ -10,7 +10,7 @@ import 'EditTextWidget.dart';
 import 'ListWidgt.dart';
 
 void main(List<String> args) {
-    runApp(LoginApp());
+    runApp(FirstDemo());
 }
 
 class FirstDemo extends StatelessWidget {
@@ -19,7 +19,76 @@ class FirstDemo extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.redAccent),
       title: 'demo',
-      home: TextPage(),
+      // home: TextPage(),
+      routes: {'/':(_)=> APage(),'/page_b':(_)=> BPage(),'/page_c':(_)=>CPage()},
+    );
+  }
+}
+
+class APage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Page a'),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (_) => BPage()));
+          },
+          child: Text('to page b'),
+        ),
+      ),
+    );
+  }
+}
+
+class BPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Page b'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: (){},
+              child: Text('to page c'),
+    
+            ),
+            RaisedButton(
+              onPressed: (){},
+              child: Text('back page a'),
+            )
+          ],
+        )
+      ),
+    );
+  }
+}
+
+class CPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('page c'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: (){},
+              child: Text('back last page'),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
