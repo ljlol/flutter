@@ -3,13 +3,14 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:testapp/app.dart';
 import 'bili.dart';
 import 'EditTextWidget.dart';
 import 'ListWidgt.dart';
 
 void main(List<String> args) {
-    runApp(FirstDemo());
+    runApp(LoginApp());
 }
 
 class FirstDemo extends StatelessWidget {
@@ -53,7 +54,18 @@ class _LoginHomePageState extends State<LoginHomePage> with SingleTickerProvider
   @override
   void initState(){
     super.initState();
+    _tabController = TabController(length: _pageIndicators.length,vsync: this);
 
+    _pages..add(LoginPage())..add(RegisterPage());
+
+    _tabController.addListener((){
+      if(_tabController.indexIsChanging)
+      {
+        setState(() {
+          _position = _tabController.index;
+        });
+      }
+    });
   }
 
   @override
@@ -65,7 +77,7 @@ class _LoginHomePageState extends State<LoginHomePage> with SingleTickerProvider
           padding: EdgeInsets.all(20.0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('images/drawable-xhdpi-v4/ic_card_personal_foreign.png'),fit: BoxFit.cover),
+            // image: DecorationImage(image: Image.asset('images/drawable-xhdpi-v4/search_loading_0.png'),fit: BoxFit.cover),
           ),
           child: SingleChildScrollView(
             child: SafeArea(
@@ -76,8 +88,8 @@ class _LoginHomePageState extends State<LoginHomePage> with SingleTickerProvider
                     indicatorSize: TabBarIndicatorSize.label,
                     controller: _tabController,
                     indicatorWeight: 4.0,
-                    indicatorColor: Colors.white,
-                    tabs: _pageIndicators.map((v) => Text(v,style: TextStyle(color: Colors.white, fontSize: 24.0),)).toList(),
+                    indicatorColor: Colors.black,
+                    tabs: _pageIndicators.map((v) => Text(v,style: TextStyle(color: Colors.black, fontSize: 24.0),)).toList(),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top:30.0),
@@ -99,6 +111,208 @@ class _LoginHomePageState extends State<LoginHomePage> with SingleTickerProvider
     );
   }
 }
+
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  GlobalKey<FormState> _formKey = GlobalKey();
+
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  _login(){
+    // 取消焦点
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    if(_formKey.currentState.validate()){
+      var username = _usernameController.value.text;
+      var password = _passwordController.value.text;
+
+      if(username == '111' && password == '123123'){
+        Fluttertoast.showToast(msg:'登陆成功');
+      }else{
+        Fluttertoast.showToast(msg:'登录失败');
+      }
+    }
+  
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: TextFormField(
+              controller: _usernameController,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0
+              ),
+              decoration: InputDecoration(
+                icon: Icon(Icons.verified_user,size: 24.0,color: Colors.black,),
+                labelText: '请输入用户名',
+                labelStyle: TextStyle(color: Colors.black),
+                helperStyle: TextStyle(color: Colors.black)
+
+              ),
+
+              validator: (value) => value.trim().isEmpty?'用户名不能为空': null,
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: TextFormField(
+              obscureText: true,
+              controller: _passwordController,
+              style: TextStyle(color: Colors.black,fontSize: 16.0),
+              decoration: InputDecoration(
+                icon: Icon(Icons.panorama,size: 24.0,color: Colors.black,),
+                labelText: '请输入密码',
+                labelStyle: TextStyle(color: Colors.black),
+                helperStyle: TextStyle(color: Colors.black),
+              ),
+              validator: (value) => value.trim().length<6?'密码长度不能小于6位':null,
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(top: 20.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: RaisedButton(
+                color: Colors.pink,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                onPressed: _login,
+                child: Text(
+                  '登陆',
+                  style:TextStyle(color: Colors.black,fontSize: 20.0)
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+      
+    );
+  }
+}
+
+
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+
+  GlobalKey<FormState> _formKey = GlobalKey();
+
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: TextFormField(
+              obscureText: true,
+              controller: _usernameController,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0
+              ),
+              decoration: InputDecoration(
+                icon: Icon(Icons.add_photo_alternate,size:24.0,color:Colors.black),
+                labelText: '请输入用户名',
+                labelStyle: TextStyle(color: Colors.black),
+                helperStyle: TextStyle(color: Colors.black)
+              ),
+              validator: (value) => value.trim().isEmpty?'用户名不能为空':null,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: TextFormField(
+              obscureText: true,
+              controller: _passwordController,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0
+              ),
+              decoration: InputDecoration(
+                icon: Icon(Icons.add_a_photo,size:24.0,color:Colors.black),
+                labelText: '请输入密码',
+                labelStyle: TextStyle(color: Colors.black),
+                helperStyle: TextStyle(color: Colors.black)
+              ),
+
+              validator: (value) => value.trim().length<6?'密码不能小于6位':null,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: TextFormField(
+              obscureText: true,
+              controller: _confirmController,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0
+              ),
+              decoration: InputDecoration(
+                icon: Icon(Icons.desktop_windows,size:24.0,color:Colors.black),
+                labelText: '请确认密码',
+                labelStyle: TextStyle(color: Colors.black),
+                helperStyle: TextStyle(color: Colors.black)
+              ),
+
+              validator: (value) => value.trim().length<6?'密码不能小于6位':null,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: RaisedButton(
+                color: Colors.pink,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                onPressed: (){},
+                child: Text(
+                  '注册',
+                  style:TextStyle(color: Colors.black,fontSize: 20.0)
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 
 class TextPage extends StatefulWidget {
   @override
@@ -278,7 +492,7 @@ class _page1State extends State<page1> with SingleTickerProviderStateMixin {
         ],
         bottom: TabBar(
           labelColor: Colors.red,
-          unselectedLabelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
           controller: _tabController,
           isScrollable: false,
           indicatorColor: Colors.yellow,
@@ -316,7 +530,7 @@ class _page1State extends State<page1> with SingleTickerProviderStateMixin {
       floatingActionButton: 
         FloatingActionButton(
           onPressed: ()=> print('Add'),
-          child: Icon(Icons.add, color: Colors.white),
+          child: Icon(Icons.add, color: Colors.black),
           
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
