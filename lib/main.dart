@@ -19,8 +19,35 @@ class FirstDemo extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.redAccent),
       title: 'demo',
-      // home: TextPage(),
-      routes: {'/':(_)=> APage(),'/page_b':(_)=> BPage(),'/page_c':(_)=>CPage()},
+      home: SingleChildScrollDemoPage(),
+      // routes: {'/':(_)=> APage(),'/page_b':(_)=> BPage(),'/page_c':(_)=>CPage()},
+    );
+  }
+}
+
+class SingleChildScrollDemoPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    List<String> letters = ['1','23','4','5','6','7','8','9','0','9','8','7','6','5','4','3','2'];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('single child demo'),
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Center(
+          child: Row(
+            children: List.generate(letters.length, 
+              (index) => Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(letters[index],style:TextStyle(fontSize: 18.0)),
+              )
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -35,7 +62,17 @@ class APage extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (_) => BPage()));
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context,anim,_) => BPage(),
+                transitionDuration: Duration(milliseconds: 500),
+                transitionsBuilder: (context,anim,_,child) => ScaleTransition(
+                  scale: Tween(begin: 0.0,end: 1.0).animate(anim),
+                  child: child,
+                )
+              )
+            );
           },
           child: Text('to page b'),
         ),
