@@ -19,8 +19,85 @@ class FirstDemo extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.redAccent),
       title: 'demo',
-      home: SingleChildScrollDemoPage(),
+      home: SliverPage(),
       // routes: {'/':(_)=> APage(),'/page_b':(_)=> BPage(),'/page_c':(_)=>CPage()},
+    );
+  }
+}
+
+
+class SliverPage extends StatelessWidget {
+
+  final List<Color> colors = [Colors.red,Colors.green,Colors.blue,Colors.pink];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(slivers: <Widget>[
+        SliverAppBar(
+          title: Text('Sliver demo'),
+          centerTitle: true,
+          expandedHeight: 300.0,
+          forceElevated: true,
+          // floating: true,
+          // 该属性只有在 floating 为 true 的情况下使用，不然会报错
+          // 当上滑到一定的比例，会自动把 AppBar 收缩（不知道是不是 bug，当 AppBar 下面的部件没有被 AppBar 覆盖的时候，不会自动收缩）
+          // 当下滑到一定比例，会自动把 AppBar 展开
+          // snap: true,
+          // 设置该属性使 Appbar 折叠后不消失
+          pinned: true,
+          // 通过这个属性设置 AppBar 的背景
+          flexibleSpace: FlexibleSpaceBar(
+            collapseMode: CollapseMode.parallax,
+            background: Image.network('https://wx2.sinaimg.cn/mw690/9e5389bbly1g4jkbkp9pmj20u01hc7t3.jpg',fit: BoxFit.cover,),
+          ),
+
+
+        ),
+        SliverFillViewport(
+          viewportFraction: 1.0,
+          delegate: SliverChildBuilderDelegate(
+            (context,index) => Container(
+              child: Text('Item $index') ,
+              alignment: Alignment.center,
+              color: colors[index % 4],
+              
+            ),
+            childCount:10
+          ),
+        )
+        // SliverFillRemaining(
+        //   child: Center(
+        //     child: Text('FillRemaining',style: TextStyle(fontSize: 30.0),),
+        //   ),
+        // )
+      ]),
+    );
+  }
+}
+
+class GridPage extends StatelessWidget {
+  final List<String> letters = ['1','23','4','5','6','7','8','9','0','9','8','7','6','5','4','3','2'];
+
+  final List<Color> colors = [Colors.red,Colors.green,Colors.blue,Colors.pink];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Grid demo'),
+      ),
+      body: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5, //单行的数量
+          mainAxisSpacing: 10.0, // item之间主轴方向的间隔
+          crossAxisSpacing: 10.0, //item之间副轴的间隔
+          childAspectRatio: 1.0 //item的宽高比
+        ),
+        children: List.generate(
+          letters.length, (index)=>Container(alignment: Alignment.center,child: Text(letters[index]),color: colors[index % 4],)
+      ),
+    )
     );
   }
 }
@@ -42,7 +119,11 @@ class SingleChildScrollDemoPage extends StatelessWidget {
             children: List.generate(letters.length, 
               (index) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(letters[index],style:TextStyle(fontSize: 18.0)),
+                child: Text(
+                  letters[index],
+                  style:TextStyle(fontSize: 18.0)
+                ),
+                
               )
             ),
           ),
