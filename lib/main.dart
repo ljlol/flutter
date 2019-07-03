@@ -19,8 +19,79 @@ class FirstDemo extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.redAccent),
       title: 'demo',
-      home: SliverPage(),
+      home: promptDme(),
       // routes: {'/':(_)=> APage(),'/page_b':(_)=> BPage(),'/page_c':(_)=>CPage()},
+    );
+  }
+}
+
+
+class promptDme extends StatefulWidget {
+  @override
+  _promptDmeState createState() => _promptDmeState();
+}
+
+class _promptDmeState extends State<promptDme> {
+
+  var count = 0;
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  // 自增操作
+  increase() {
+    setState(() => count++);
+  }
+
+  // 自减操作
+  decrease() {
+    setState(() => count--);
+  }
+
+  _changeValue(BuildContext context){
+    increase();
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text('当前值已修改'),action: SnackBarAction(label: '撤销',onPressed: decrease,),duration: Duration(milliseconds: 2000),));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('prompt demo'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Text('当前值：$count',style: TextStyle(fontSize: 20.0),),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 12.0,vertical: 8.0),
+              children: <Widget>[
+                Builder(
+                  builder: (context) => RaisedButton(
+                    onPressed: () => _changeValue(context),
+                    child: Text('修改当前值'),
+                  ),
+                )
+              ],
+            ),
+          ),
+
+        ],
+      ),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () => _changeValue(context),
+          child: Icon(Icons.send),
+        ),
+      ),
     );
   }
 }
